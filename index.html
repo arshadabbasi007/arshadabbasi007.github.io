@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily LS PK17 Report</title>
+<style>
+    body {
+        font-family: 'Arial Black', sans-serif;
+        background: #000;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        min-height: 100vh;
+
+        /* Background Image Adjust */
+        background-size: cover;       /* Full screen cover */
+        background-position: center;  /* Center image */
+        background-repeat: no-repeat; /* No repeat */
+        background-attachment: fixed; /* Fixed on scroll */
+
+        transition: background 0.3s;
+    }
+
+    /* Heading Highlight */
+    h1 {
+        margin: 20px 0;
+        color: #ff69b4;
+        font-size: 3em;
+        text-shadow: 2px 2px 5px #000;
+    }
+
+    /* Image Preview Box */
+    #imagePreviewBox {
+        width: 90%;
+        max-width: 700px;
+        min-height: 120px;
+        margin: 10px auto 30px auto;
+        padding: 10px;
+        border: 2px dashed #ff69b4;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto;
+    }
+
+    #imagePreviewBox img {
+        max-width: 100px;
+        margin: 5px;
+        border: 2px solid #ff69b4;
+        border-radius: 5px;
+    }
+
+    .box {
+        width: 90%;
+        max-width: 650px;
+        margin: 20px auto;
+        padding: 15px;
+        border: 2px solid #ff69b4;
+        border-radius: 10px;
+        background: rgba(0,0,0,0.7);
+        box-shadow: 0 4px 10px rgba(255,105,180,0.5);
+    }
+
+    .date-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #ff69b4;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+    }
+
+    td {
+        border: 1px solid #ff69b4;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    .name-cell {
+        width: 50%;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .result-number {
+        font-weight: bold;
+        color: #ff1493;
+        font-size: 22px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .note {
+        font-size: 12px;
+        color: #ccc;
+        margin-top: 5px;
+    }
+
+    /* Upload input styling */
+    #bgUpload {
+        margin-top: 10px;
+    }
+
+    button {
+        background: #ff69b4;
+        border: none;
+        color: #000;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-left: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Daily LS PK17 Report</h1>
+
+<!-- Image Upload Box -->
+<div id="imageUploadBox" class="box">
+    <p>Upload Background Images:</p>
+    <input type="file" id="bgUpload" accept="image/*" multiple>
+    <button onclick="clearBackground()">Remove Background</button>
+    <div id="imagePreviewBox"></div>
+</div>
+
+<!-- Today Table -->
+<div class="box" id="todayTable">
+    <div class="date-title" id="todayDate">Today – </div>
+    <table>
+        <tr><td class="name-cell">PK17</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">GM</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS1</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">AK</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS2</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS3</td><td class="result-number">✖</td></tr>
+    </table>
+    <div class="note">Click on ✖ to update result manually.</div>
+</div>
+
+<!-- Reference Table -->
+<div class="box">
+    <div class="date-title">Reference: Name & Time</div>
+    <table>
+        <tr><td class="name-cell">PK17</td><td class="result-number">05:30 PM</td></tr>
+        <tr><td class="name-cell">GM</td><td class="result-number">07:00 PM</td></tr>
+        <tr><td class="name-cell">LS1</td><td class="result-number">09:00 PM</td></tr>
+        <tr><td class="name-cell">AK</td><td class="result-number">10:04 PM</td></tr>
+        <tr><td class="name-cell">LS2</td><td class="result-number">12:00 AM</td></tr>
+        <tr><td class="name-cell">LS3</td><td class="result-number">02:30 AM</td></tr>
+    </table>
+</div>
+
+<!-- Previous Day Example -->
+<div class="box">
+    <div class="date-title">Date: 09-11-2025</div>
+    <table>
+        <tr><td class="name-cell">PK17</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">GM</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS1</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">AK</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS2</td><td class="result-number">✖</td></tr>
+        <tr><td class="name-cell">LS3</td><td class="result-number">✖</td></tr>
+    </table>
+</div>
+
+<script>
+// Auto update today's date
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2,'0');
+    const month = String(date.getMonth()+1).padStart(2,'0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+document.getElementById('todayDate').textContent = "Today – " + formatDate(new Date());
+
+// Background Image Upload & Preview
+const bgUpload = document.getElementById('bgUpload');
+const imagePreviewBox = document.getElementById('imagePreviewBox');
+
+bgUpload.addEventListener('change', function(event) {
+    const files = event.target.files;
+    imagePreviewBox.innerHTML = '';
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            imagePreviewBox.appendChild(img);
+
+            // Fullscreen background image adjust
+            document.body.style.backgroundImage = `url(${e.target.result})`;
+        }
+        reader.readAsDataURL(file);
+    });
+});
+
+function clearBackground() {
+    document.body.style.backgroundImage = 'none';
+    imagePreviewBox.innerHTML = '';
+}
+
+// Manual Result Update on Click
+document.querySelectorAll('.result-number').forEach(cell => {
+    cell.addEventListener('click', () => {
+        const newValue = prompt("Enter Result:", cell.textContent === "✖" ? "" : cell.textContent);
+        if(newValue !== null && newValue.trim() !== "") {
+            cell.textContent = newValue;
+        }
+    });
+});
+</script>
+
+</body>
+</html>
